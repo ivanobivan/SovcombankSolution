@@ -1,0 +1,71 @@
+<div class="mt-4">
+    <h4 class="row g-0 mb-2">История операций</h4>
+    <div class="row mb-4 active-tabs">
+        <div class="col-auto tab" [ngClass]="{'active': activeTab === 0}" (click)="changeActiveTab(0)">История
+            Пополнения/Вывод средств
+        </div>
+        <div class="col-auto tab" [ngClass]="{'active': activeTab === 1}" (click)="changeActiveTab(1)">
+            История торговых операций
+        </div>
+    </div>
+    <ng-container *ngIf="activeTab === 0">
+        <div class="row mb-2 grey">
+            <div class="col-auto">Валюта</div>
+            <div class="col"></div>
+            <div class="col">Номер счета</div>
+            <div class="col">Тип операции</div>
+            <div class="col">Дата операции</div>
+            <div class="col">Количество средств</div>
+        </div>
+        <div *ngFor="let story of currencyList; let i = index" class="card mb-2 ">
+            <div class="card-body row align-items-center">
+                <div class="col-auto">
+                    <img [src]="getCurrencyIcon(story.fromCurrency)" alt="icon" class="currency-icon">
+                </div>
+                <div class="col">{{currencyDescription[story.fromCurrency]}}</div>
+                <div class="col">{{story.fromAccountNumber}}</div>
+                <div class="col">{{operationDescription[story.operationType]}}</div>
+                <div class="col">{{getLocalDate(story.date)}}</div>
+                <div class="col">{{story.amount | currency: story.fromCurrency: 'symbol-narrow':'1.2-2'}}</div>
+            </div>
+        </div>
+        <div *ngIf="!currencyList.length" class="card mb-2 p-3">Список пуст</div>
+    </ng-container>
+    <ng-container *ngIf="activeTab === 1">
+        <div class="row mb-2 grey">
+            <div class="col-auto">Валюта</div>
+            <div class="col"></div>
+            <div class="col">Номер счета</div>
+            <div class="col">Тип операции</div>
+            <div class="col">Дата операции</div>
+            <div class="col">Количество средств</div>
+            <div class="col">Стоимость актива</div>
+        </div>
+        <div *ngFor="let story of tradeList; let i = index" class="card mb-2 ">
+            <div class="card-body row align-items-center">
+                <div class="col-auto">
+                    <div class="row">
+                        <img [src]="getCurrencyIcon(story.toCurrency)" alt="icon" class="col-12 currency-icon">
+                        <img [src]="getCurrencyIcon(story.fromCurrency)" alt="icon" class="col-12 currency-icon">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="row">
+                        <div class="col-12">{{currencyDescription[story.toCurrency]}}</div>
+                        <div class="col-12">{{currencyDescription[story.fromCurrency]}}</div>
+                    </div>
+                </div>
+                <div class="col">{{story.fromAccountNumber}}</div>
+                <div class="col">{{operationDescription[story.operationType]}}</div>
+                <div class="col">{{getLocalDate(story.date)}}</div>
+                <div class="col">{{story.amount | currency: story.toCurrency: 'symbol-narrow':'1.2-2'}}</div>
+                <div class="col">{{story.cost}}</div>
+            </div>
+        </div>
+        <div *ngIf="!tradeList.length" class="card mb-2 p-3">Список пуст</div>
+    </ng-container>
+</div>
+<div *ngIf="loading" class="overlay">
+    <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
+    <div class="title">Получаем данные</div>
+</div>

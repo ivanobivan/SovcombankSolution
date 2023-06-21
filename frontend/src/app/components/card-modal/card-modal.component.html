@@ -1,0 +1,85 @@
+<div *ngIf="data" class="container-fluid p-3">
+    <div class="row align-items-center my-1">
+        <h4 class="col">{{data.title}}</h4>
+    </div>
+    <hr class="row mb-2"/>
+    <div class="row mb-2">
+        <img src="assets/bw-creditcard.svg" alt="card-info">
+    </div>
+    <form [formGroup]="formGroup">
+        <div class="row g-1 mb-3">
+            <input type="text"
+                   mask="0000 0000 0000 0000"
+                   [formControlName]="controlName.NUMBER"
+                   class="form-control"
+                   placeholder="CARD NUMBER"/>
+            <div *ngIf="errorHandler.checkRequired([controlName.NUMBER])" class="required">
+                {{errorText[errorCode.REQUIRED]}}
+            </div>
+            <div *ngIf="errorHandler.checkMask([controlName.NUMBER])" class="required">
+                {{errorText[errorCode.MASK]}}
+            </div>
+        </div>
+        <div class="row g-1 mb-3">
+            <input type="text"
+                   [formControlName]="controlName.HOLDER"
+                   class="form-control"
+                   placeholder="CARDHOLDER"/>
+            <div *ngIf="errorHandler.checkRequired([controlName.HOLDER])" class="required">
+                {{errorText[errorCode.REQUIRED]}}
+            </div>
+        </div>
+        <div class="row g-0 mb-3 justify-content-between">
+            <div class="col-5 mr-2">
+                <input type="text"
+                       mask="00/00"
+                       [formControlName]="controlName.EXPIRED_DATE"
+                       class="form-control"
+                       placeholder="Дата окончания"/>
+                <div *ngIf="errorHandler.checkRequired([controlName.EXPIRED_DATE])" class="required">
+                    {{errorText[errorCode.REQUIRED]}}
+                </div>
+                <div *ngIf="errorHandler.checkMask([controlName.EXPIRED_DATE])" class="required">
+                    {{errorText[errorCode.MASK]}}
+                </div>
+            </div>
+            <div class="col-5">
+                <input type="text"
+                       mask="000"
+                       [formControlName]="controlName.CVV"
+                       class="form-control"
+                       placeholder="CVV"/>
+                <div *ngIf="errorHandler.checkRequired([controlName.CVV])" class="required">
+                    {{errorText[errorCode.REQUIRED]}}
+                </div>
+                <div *ngIf="errorHandler.checkMask([controlName.CVV])" class="required">
+                    {{errorText[errorCode.MASK]}}
+                </div>
+            </div>
+        </div>
+        <div class="row g-1 mb-3">
+            <input type="number"
+                   [formControlName]="controlName.AMOUNT"
+                   class="form-control"
+                   placeholder="1000.00"/>
+            <div *ngIf="errorHandler.checkRequired([controlName.AMOUNT])" class="required">
+                {{errorText[errorCode.REQUIRED]}}
+            </div>
+        </div>
+        <div class="row g-1">
+            <button type="button"
+                    class="col btn btn-primary"
+                    aria-label="Left Align"
+                    [title]="data.title"
+                    (click)="proceedMoneyToBankAccount()">
+                {{data.title}}
+            </button>
+        </div>
+    </form>
+
+</div>
+
+<div *ngIf="loading" class="overlay">
+    <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
+    <div class="title">Выполняем операцию</div>
+</div>

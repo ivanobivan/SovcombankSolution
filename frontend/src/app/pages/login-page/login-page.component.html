@@ -1,0 +1,72 @@
+<div class="container-fluid base">
+    <div class="row full-page align-content-center justify-content-center">
+
+        <form class="col-4" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <div class="row mb-3 form-group align-items-center">
+                <label class="col-2" [htmlFor]="controlName.EMAIL">Почта</label>
+                <div class="col-10">
+                    <input class="form-control"
+                           type="email"
+                           [id]="controlName.EMAIL"
+                           [formControlName]="controlName.EMAIL"
+                           autocomplete="off"/>
+                </div>
+
+                <div *ngIf="errorHandler.checkRequired([controlName.EMAIL])" class="required">
+                    {{errorText[errorCode.REQUIRED]}}
+                </div>
+                <div *ngIf="errorHandler.checkEmail([controlName.EMAIL])" class="required">
+                    {{errorText[errorCode.EMAIL]}}
+                </div>
+            </div>
+
+            <div class="row mb-3 form-group align-items-center">
+                <label class="col-2" [htmlFor]="controlName.PASSWORD">Пароль</label>
+                <div class="col-10">
+                    <input class="form-control"
+                           type="password"
+                           [formControlName]="controlName.PASSWORD"
+                           autocomplete="off"/>
+                </div>
+                <div *ngIf="errorHandler.checkRequired([controlName.PASSWORD])" class="required">
+                    {{errorText[errorCode.REQUIRED]}}
+                </div>
+                <div *ngIf="loginType === LoginType.SIGNUP && errorHandler.checkMinLength([controlName.PASSWORD])" class="required">
+                    {{errorText[errorCode.MIN_LENGTH]}}
+                </div>
+                <div *ngIf="loginType === LoginType.SIGNUP && errorHandler.checkMaxLength([controlName.PASSWORD])" class="required">
+                    {{errorText[errorCode.MAX_LENGTH]}}
+                </div>
+            </div>
+
+            <div *ngIf="loginType === LoginType.SIGNUP" class="row mb-3 form-group align-items-center">
+                <label class="col-2" [htmlFor]="controlName.REPEAT_PASSWORD">Повторите пароль</label>
+                <div class="col-10">
+                    <input class="form-control"
+                           type="password"
+                           [formControlName]="controlName.REPEAT_PASSWORD"
+                           autocomplete="off"/>
+                </div>
+                <div *ngIf="errorHandler.checkRequired([controlName.REPEAT_PASSWORD])" class="required">
+                    {{errorText[errorCode.REQUIRED]}}
+                </div>
+                <div *ngIf="errorHandler.checkEquals([controlName.REPEAT_PASSWORD])" class="required">
+                    {{errorText[errorCode.EQUALS]}}
+                </div>
+            </div>
+
+            <div class="row g-0 mb-3 align-items-center justify-content-end">
+                <a class="col-auto pointer" (click)="toggleLoginType()">
+                    {{loginType === LoginType.LOGIN ? 'Регистрация' : 'Войти'}}
+                </a>
+            </div>
+            <div class="row g-0">
+                <button [disabled]="loading" class="btn btn-primary col-12">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{loginType === LoginType.LOGIN ? 'Войти' : 'Зарегистрироваться'}}
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>

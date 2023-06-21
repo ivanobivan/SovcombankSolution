@@ -1,0 +1,4 @@
+.idea
+frontend/public
+frontend/src/assets/video.mp4
+node_modules

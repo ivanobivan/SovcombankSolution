@@ -1,0 +1,12 @@
+.grey {
+    color: rgba(0, 0, 0, .6)
+}
+
+.tab {
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    cursor: pointer;
+}
+
+.tab.active {
+    border-bottom: 2px solid black;;
+}

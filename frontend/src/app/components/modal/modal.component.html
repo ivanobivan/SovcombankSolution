@@ -1,0 +1,9 @@
+<div *ngIf="data" class="container-fluid g-0">
+
+    <div class="row m-3" [ngClass]="{'error': data.type === modalType.ERROR}">
+        <h4 class="col">{{data.title}}</h4>
+    </div>
+    <div class="row mx-3 mb-3" [ngClass]="{'error': data.type === modalType.ERROR, 'info': data.type === modalType.INFO}">
+        <div class="col">{{getMessage()}}</div>
+    </div>
+</div>

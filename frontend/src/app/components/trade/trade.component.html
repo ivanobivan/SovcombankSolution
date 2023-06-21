@@ -1,0 +1,37 @@
+<div class="mt-4">
+    <h4 class="row g-0 mb-2">Торговля</h4>
+    <div class="row mb-2 grey">
+        <div class="col-auto">Валюта</div>
+        <div class="col">Наименование</div>
+        <div class="col">Текущий курс</div>
+        <div class="col"></div>
+    </div>
+    <div *ngFor="let pair of currencyPairList; let i = index" class="card mb-2 ">
+        <div class="card-body row align-items-center">
+            <div class="col-auto">
+                <div class="row">
+                    <div class="col-12">
+                        <img [src]="getCurrencyIcon(pair, 0)" alt="icon" class="currency-icon">
+                    </div>
+                    <div class="col-12">
+                        <img [src]="getCurrencyIcon(pair, 1)" alt="icon" class="currency-icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col">{{pair}}</div>
+            <div class="col">{{currencyValueList?.[i]}}</div>
+            <div class="col">
+                <button type="button"
+                        class="right btn btn-success"
+                        title="Перейти к торговле"
+                        (click)="goToTradePage(i)">
+                    Перейти к торговле
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="loading" class="overlay">
+    <div class="spinner-border text-info" style="width: 3rem; height: 3rem;" role="status"></div>
+    <div class="title">Получаем данные</div>
+</div>

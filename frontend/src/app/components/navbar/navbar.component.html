@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">
+        <span class="bi bi-bank icon"></span>
+        <span>BIV-инвестиции</span>
+    </a>
+
+    <div class="collapse navbar-collapse justify-content-between">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active" *ngFor="let page of pages">
+                <a class="nav-link" [routerLink]="page.link">{{page.title}}</a>
+            </li>
+
+        </ul>
+        <a *ngIf="!isAuthorized" [routerLink]="pageName.LOGIN">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Войти</button>
+        </a>
+        <button *ngIf="isAuthorized"
+                class="btn btn-outline-success my-2 my-sm-0"
+                type="button"
+                (click)="logout()">
+            Выйти
+        </button>
+    </div>
+</nav>
